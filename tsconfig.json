@@ -7,8 +7,20 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "target",
+
+    // Enforce explicit type annotations
+    "noImplicitAny": true,          // Disallow variables with implicit "any" type
+    "noImplicitThis": true,         // Require type for "this"
+    "strictBindCallApply": true,    // Strict typing for bind/call/apply
+    "strictFunctionTypes": true,    // Function type checking
+    "strictNullChecks": true,       // Forces explicit null/undefined checks
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,      // Force functions to explicitly return
+    "noFallthroughCasesInSwitch": true,
+    "useUnknownInCatchVariables": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "bin/**/*",
   ]
 }

@@ -1,5 +1,7 @@
-import { Armor } from './Armor';
+import { Armor } from './armor';
+import { Shards, Shard, Size, Colors, Red, Blue } from "./Shards";
 
 export {
-	Armor
+	Armor,
+	Shards, Shard, Size, Colors, Red, Blue
 };

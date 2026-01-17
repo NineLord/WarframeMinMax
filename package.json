@@ -4,7 +4,7 @@
   "description": "Helps to calculate stuff about building Warframe to their most MIN/MAX values.",
   "main": "./src/index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf ./target && tsc",
     "watch": "tsc --watch"
   },
   "keywords": [],
