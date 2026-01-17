@@ -54,6 +54,11 @@ class ArcanePersistence {
 				// console.debug(`Shards :: ${JSON.stringify(shards)}`);
 
 				for (const isWarcryActive of [true, false]) {
+					/*const m = mods.toJSON();
+					const s = shards.toJSON();
+					if (m.includes("Blind Rage") && m.includes("Stand United") && m.includes("Umbral Intensify") && m.includes("Umbral Vitality") && m.includes("Umbral Fiber") && s["Tauforged Blue Armor"] === 1 && s["Tauforged Red Strength"] === undefined && isWarcryActive) {
+						let x = 5;
+					}*/
 					const armor: ArmorValue = Armor.calculate(base, modsStats[Stats.Armor], shardsStats[Stats.Armor], modsStats[Stats.Strength] + shardsStats[Stats.Strength], isWarcryActive);
 					if (armor >= ArcanePersistence.#THRESHOLD)
 						result.push(ArcanePersistence.#generateResult(armor, isWarcryActive, mods, shards));

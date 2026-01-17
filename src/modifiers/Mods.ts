@@ -45,9 +45,9 @@ class Umbral extends Mod {
 }
 
 export class Mods {
-	static UMBRAL_INTENSIFY = new Umbral("Umbral Intensify", Stats.Strength, 44, [0, 55, 77]);
-	static UMBRAL_VITALITY = new Umbral("Umbral Vitality", Stats.Health, 100, [0, 130, 180]);
-	static UMBRAL_FIBER = new Umbral("Umbral Fiber", Stats.Armor, 100, [0, 130, 180]);
+	static UMBRAL_INTENSIFY = new Umbral("Umbral Intensify", Stats.Strength, 44, [0, 11, 33]);
+	static UMBRAL_VITALITY = new Umbral("Umbral Vitality", Stats.Health, 100, [0, 30, 80]);
+	static UMBRAL_FIBER = new Umbral("Umbral Fiber", Stats.Armor, 100, [0, 30, 80]);
 
 	static BLIND_RAGE = new Mod("Blind Rage", Stats.Strength, 99);
 	static TRANSIENT_FORTITUDE = new Mod("Transient Fortitude", Stats.Strength, 55);

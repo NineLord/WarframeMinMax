@@ -2,6 +2,7 @@ import { ArmorValue, Percentage } from './stats/Warframe';
 
 export class Armor {
 
+	static #BASE_STRENGTH: Percentage = 100;
 	static #WARCRY_BASE_ARMOR_BUFF: number = 50 / 100; // The same value for Valkyr and when it's being subsume.
 
 	/**
@@ -14,7 +15,7 @@ export class Armor {
 	 * @return The Warframe's final armor value.
 	 */
 	static calculate(base: ArmorValue, mods: Percentage, shards: ArmorValue, strength: Percentage, isWarcryActive: boolean): ArmorValue {
-		const warcryBonus = isWarcryActive ? Armor.#WARCRY_BASE_ARMOR_BUFF * strength : 0;
+		const warcryBonus = isWarcryActive ? Armor.#WARCRY_BASE_ARMOR_BUFF * (Armor.#BASE_STRENGTH + strength) : 0;
 		return (
 			(
 				base * (
