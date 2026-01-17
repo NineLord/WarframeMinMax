@@ -23,7 +23,7 @@ export class Shards {
 		return this.#MAX_SHARDS;
 	}
 
-	toJSON(): WarframeStats {
+	toStats(): WarframeStats {
 		const result = {
 			[Stats.Health]: 0,
 			[Stats.Armor]: 0,
@@ -31,38 +31,50 @@ export class Shards {
 		};
 
 		for (const shard of this.#loadout) {
-			switch (shard.color) {
-				case Blue.Armor:
+			switch (shard.power) {
+				case Power.Armor:
 					result[Stats.Armor] += shard.toValue();
 					break;
-				case Red.Strength:
+				case Power.Strength:
 					result[Stats.Strength] += shard.toValue();
 					break;
 				default:
-					throw new Error(`Unknown shard color: ${shard.color}`);
+					throw new Error(`Unknown shard color: ${shard.power}`);
 			}
 		}
 
+		return result;
+	}
+
+	toJSON() {
+		const result: Record<string, number> = {};
+		for (const shard of this.#loadout) {
+			const name = shard.toJSON();
+			if (result.hasOwnProperty(name))
+				result[name] += 1;
+			else
+				result[name] = 1;
+		}
 		return result;
 	}
 }
 
 export class Shard {
 	readonly #size: Size;
-	readonly #color: Colors;
+	readonly #power: Power;
 
-	constructor(size: Size, color: Colors) {
+	constructor(size: Size, power: Power) {
 		this.#size = size;
-		this.#color = color;
+		this.#power = power;
 	}
 
-	get color(): Colors {
-		return this.#color;
+	get power(): Power {
+		return this.#power;
 	}
 
 	toValue(): HealthValue | ArmorValue | StrengthValue {
-		switch (this.#color) {
-			case Blue.Armor:
+		switch (this.#power) {
+			case Power.Armor:
 				switch (this.#size) {
 					case Size.Tauforged:
 						return 225 as ArmorValue;
@@ -71,7 +83,7 @@ export class Shard {
 					default:
 						throw new Error(`Unknown size: ${this.#size}`);
 				}
-			case Red.Strength:
+			case Power.Strength:
 				switch (this.#size) {
 					case Size.Tauforged:
 						return 15 as StrengthValue;
@@ -81,8 +93,12 @@ export class Shard {
 						throw new Error(`Unknown size: ${this.#size}`);
 				}
 			default:
-				throw new Error(`Unrecognized shard size: ${this.#size}`);
+				throw new Error(`Unrecognized shard power: ${this.#power}`);
 		}
+	}
+
+	toJSON() {
+		return `${Size[this.#size]} ${this.#power}`;
 	}
 }
 
@@ -91,12 +107,7 @@ export enum Size {
 	Regular,
 }
 
-export type Colors = Blue | Red;
-
-export enum Blue {
-	Armor,
-}
-
-export enum Red {
-	Strength,
+export enum Power {
+	Armor = "Blue Armor",
+	Strength = "Red Strength",
 }

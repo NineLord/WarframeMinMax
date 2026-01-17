@@ -24,6 +24,10 @@ class Mod {
 		return this.#value;
 	}
 
+	toJSON() {
+		return this.#name;
+	}
+
 }
 
 class Umbral extends Mod {
@@ -41,9 +45,9 @@ class Umbral extends Mod {
 }
 
 export class Mods {
-	static UMBRAL_INTENSIFY = new Umbral("Umbral Intensify", Stats.Strength, 44, [55, 77]);
-	static UMBRAL_VITALITY = new Umbral("Umbral Vitality", Stats.Health, 100, [130, 180]);
-	static UMBRAL_FIBER = new Umbral("Umbral Fiber", Stats.Armor, 100, [130, 180]);
+	static UMBRAL_INTENSIFY = new Umbral("Umbral Intensify", Stats.Strength, 44, [0, 55, 77]);
+	static UMBRAL_VITALITY = new Umbral("Umbral Vitality", Stats.Health, 100, [0, 130, 180]);
+	static UMBRAL_FIBER = new Umbral("Umbral Fiber", Stats.Armor, 100, [0, 130, 180]);
 
 	static BLIND_RAGE = new Mod("Blind Rage", Stats.Strength, 99);
 	static TRANSIENT_FORTITUDE = new Mod("Transient Fortitude", Stats.Strength, 55);
@@ -66,7 +70,7 @@ export class Mods {
 		this.#umbralCount = umbralCount;
 	}
 
-	toJSON(): WarframeStats {
+	toStats(): WarframeStats {
 		const result = {
 			[Stats.Health]: 0,
 			[Stats.Armor]: 0,
@@ -77,5 +81,9 @@ export class Mods {
 			result[mod.stat] += mod.getValue(mod instanceof Umbral ? this.#umbralCount : undefined);
 
 		return result;
+	}
+
+	toJSON() {
+		return this.#loadout.map(mod => mod.toJSON());
 	}
 }
