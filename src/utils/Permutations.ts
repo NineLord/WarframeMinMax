@@ -3,11 +3,14 @@ type WithoutOrderInAllSlotsChoices<V> = Array<V>;
 
 export class Permutations {
 
-	static* withoutOrderInAllSlots<V>(slots: number, variations: Set<V>): Generator<WithoutOrderInAllSlotsChoices<V>, undefined, undefined> {
-		const variationsArray = Array.from(variations);
+	/**
+	 * @param slots
+	 * @param variations Assumed that this is array of unique items.
+	 */
+	static* withoutOrderInAllSlots<V>(slots: number, variations: Array<V>): Generator<WithoutOrderInAllSlotsChoices<V>> {
 
 		const stack: Array<[WithoutOrderInAllSlotsIndex, WithoutOrderInAllSlotsChoices<V>]> = [
-			[variationsArray.length - 1, []],
+			[variations.length - 1, []],
 		];
 
 		while (stack.length > 0) {
@@ -20,9 +23,25 @@ export class Permutations {
 			for (let currentIndex = index; 0 <= currentIndex; --currentIndex) {
 				stack.push([
 					currentIndex,
-					[variationsArray[currentIndex], ...chosen]
+					[variations[currentIndex], ...chosen]
 				]);
 			}
+		}
+	}
+
+	static* powerSet<E>(superSet: Array<E>): Generator<WithoutOrderInAllSlotsChoices<E>> {
+		const length = superSet.length;
+		const total = 1 << length;   // 2^length subsets
+
+		for (let mask = 0; mask < total; ++mask) {
+			const subset = [];
+
+			for (let index = 0; index < length; ++index) {
+				if (mask & (1 << index))
+					subset.push(superSet[index]);
+			}
+
+			yield subset;
 		}
 	}
 }
